@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/2013/!svn/ver/780/yujeungwoo/casionwoo/war/WEB-INF/appengine-generated
+END
+local_db.bin
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/2013/!svn/ver/780/yujeungwoo/casionwoo/war/WEB-INF/appengine-generated/local_db.bin
+END
+datastore-indexes-auto.xml
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/2013/!svn/ver/780/yujeungwoo/casionwoo/war/WEB-INF/appengine-generated/datastore-indexes-auto.xml
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/2013/!svn/ver/780/yujeungwoo/casionwoo/war/WEB-INF
+END
+logging.properties
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/logging.properties
+END
+appengine-web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/appengine-web.xml
+END
+cron.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/2013/!svn/ver/735/yujeungwoo/casionwoo/war/WEB-INF/cron.xml
+END
+cron.out.xml
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/cron.out.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/2013/!svn/ver/646/yujeungwoo/casionwoo/war/WEB-INF/web.xml
+END

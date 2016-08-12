@@ -1,0 +1,162 @@
+package ssomap.BlobStore;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.channels.Channels;
+
+import ssomap.Photos.Photos;
+import ssomap.hotQueue.EventQueue;
+
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.files.AppEngineFile;
+import com.google.appengine.api.files.FileReadChannel;
+import com.google.appengine.api.files.FileService;
+import com.google.appengine.api.files.FileServiceFactory;
+import com.google.appengine.api.files.FileWriteChannel;
+import com.google.appengine.api.files.FinalizationException;
+import com.google.appengine.api.files.LockException;
+
+public class BlobStore {
+
+	private DatastoreService datastore = DatastoreServiceFactory
+			.getDatastoreService();
+	private BlobstoreService blobStoreService = BlobstoreServiceFactory
+			.getBlobstoreService();
+	private static final String PATH = "path";
+	private FileService fileService = null;
+	private AppEngineFile file = null;
+	private FileWriteChannel writeChannel = null;
+	private FileReadChannel readChannel = null;
+	private PrintWriter out = null;
+	private static String path = null;
+
+	private static BlobStore self = null;
+
+	public static BlobStore get() {
+		if (self == null) {
+			self = new BlobStore();
+		}
+		return self;
+	}
+
+	public String getPath() {
+		Query q = new Query(PATH);
+		PreparedQuery pq = datastore.prepare(q);
+		for (Entity result : pq.asIterable()) {
+			return (String) result.getProperty(PATH);
+		}
+		return null;
+	}
+
+	public void setPath(String path) {
+		Query q = new Query(PATH);
+		PreparedQuery pq = datastore.prepare(q);
+		for (Entity result : pq.asIterable()) {
+			result.setProperty(PATH, path);
+		}
+	}
+
+	public void getBlobStore() throws IOException {
+
+		path = getPath();
+		fileService = FileServiceFactory.getFileService();
+
+		if (path == null)
+		{
+			file = fileService.createNewBlobFile("text/plain");
+			setPath(file.getFullPath());			
+		}
+		else
+			file = new AppEngineFile(path);
+	}
+
+	public void prepareWriting() throws IOException, FinalizationException {
+		writeChannel = fileService.openWriteChannel(file, false);
+		out = new PrintWriter(Channels.newWriter(writeChannel, "UTF8"));
+	}
+
+	public void writeBlobStore(Photos photo) {
+		out.println(photo.getPictureID() + " " + photo.getOwnerId() + " "
+				+ photo.getGeocell().get(9) + " " + photo.getMakeTimeS());
+	}
+
+	public void switchBlob() throws IOException{
+		BufferedReader reader = readBlobStore();
+		if (reader == null) {
+			System.out.println("reader :  null");
+			return;
+		}
+		StringBuilder stringBuilder = new StringBuilder();
+		String contents = null;
+
+		while ((contents = reader.readLine()) != null) {
+			String content[] = contents.split(" ");
+			stringBuilder.append(contents + "\n");
+		}
+		makeNewBolb(stringBuilder);
+	}
+
+	public void setQueue() throws IOException {
+
+		BufferedReader reader = readBlobStore();
+		if (reader == null) {
+			System.out.println("reader :  null");
+			return;
+		}
+		StringBuilder stringBuilder = new StringBuilder();
+		String contents = null;
+
+		while ((contents = reader.readLine()) != null) {
+			String content[] = contents.split(" ");
+			EventQueue.get().push(new Photos(contents));
+			stringBuilder.append(contents + "\n");
+		}
+		makeNewBolb(stringBuilder);
+	}
+
+	public void writeBlobStore(StringBuilder content) {
+		out.println(content.toString());
+	}
+
+	public void finishWriting() throws IllegalStateException, IOException {
+		out.close();
+		BlobStore.path = file.getFullPath();
+
+	}
+
+	public void finalisze() throws FileNotFoundException,
+	FinalizationException, LockException, IOException {
+		writeChannel = fileService.openWriteChannel(file, true);
+		writeChannel.closeFinally();
+	}
+
+	public BufferedReader readBlobStore() throws IOException {
+		path = getPath();
+		if (path == null)
+			return null;
+		getBlobStore();
+
+		readChannel = fileService.openReadChannel(file, false);
+		return new BufferedReader(Channels.newReader(readChannel, "UTF8"));
+	}
+
+	public void makeNewBolb(StringBuilder content) throws IOException {
+		BlobKey blobKey = fileService.getBlobKey(file);
+		blobStoreService.delete(blobKey);
+		path = null;
+		setPath(null);
+		getBlobStore();
+		prepareWriting();
+		writeBlobStore(content);
+		finishWriting();
+	}
+}

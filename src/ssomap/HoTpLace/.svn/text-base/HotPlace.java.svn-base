@@ -1,0 +1,195 @@
+package ssomap.HoTpLace;
+
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import ssomap.Authenication.Authenication;
+import ssomap.GetTime.GetNowTime;
+import ssomap.Photos.PhotosDao;
+import ssomap.cron.HotAndCoolCron;
+import ssomap.cron.HotAndCoolCron.hotItem;
+import ssomap.hotQueue.EventQueue;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.restfb.json.JsonArray;
+import com.restfb.json.JsonObject;
+
+@Path("/hotplace")
+public class HotPlace {
+
+	private Authenication auth = new Authenication();
+	private DatastoreService datastore = DatastoreServiceFactory
+			.getDatastoreService();
+	private PhotosDao dao = new PhotosDao();
+
+	private final String TIME = "makeTimeS";
+	private final String ENTITY = "Photos";
+	private final String GEOCELL = "geocell";
+
+	@GET
+	@Path("/reget")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response regetHotPlace(@QueryParam("index") int index) {
+
+		return null;
+	}
+
+	@GET
+	@Path("/get")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getHotPlace() throws EntityNotFoundException,
+			ParseException, UnsupportedEncodingException {
+
+		if (auth.getAuthentication() == null)
+			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).build();
+
+		Calendar now = Calendar.getInstance();
+		now.roll(Calendar.HOUR, -1);
+
+		if (EventQueue.get().isEmpty()) {
+			return Response.status(HttpServletResponse.SC_NO_CONTENT).build();
+		}
+
+		Filter filter = CurrentFilter(GetNowTime.oneHourAgo());
+		Query q = new Query(ENTITY).setFilter(filter).addSort(TIME,
+				SortDirection.DESCENDING);
+		PreparedQuery pq = datastore.prepare(q);
+
+		JsonArray jsonArray = new JsonArray();
+		for (Entity result : pq.asList(FetchOptions.Builder.withLimit(10))) {
+			JsonObject temp = dao.getJsonObject(result);
+			if (!isExist(jsonArray, temp))
+				jsonArray.put(temp);
+		}
+
+		JsonObject data = new JsonObject();
+		data.put("data", jsonArray);
+		String sending = new String(data.toString().getBytes(), "EUC-KR");
+		System.out.println(data.toString());
+		return Response.status(200).entity(sending).build();
+	}
+
+	public boolean isExist(JsonArray array, JsonObject target) {
+		for (int i = 0; i < array.length(); i++) {
+			JsonObject tmp = array.getJsonObject(i);
+			if (tmp.getString("pictureID")
+					.equals(target.getString("pictureID")))
+				return true;
+		}
+		return false;
+	}
+
+	@SuppressWarnings("deprecation")
+	@GET
+	@Path("/getprevious")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getPrevious() throws ParseException,
+			UnsupportedEncodingException {
+
+		JsonArray jsonArray = new JsonArray();
+
+		List<hotItem> hotTable = HotAndCoolCron.getHotTable();/*
+															 * System.out.println
+															 * (
+															 * "if(map : isempty?) && "
+															 * +
+															 * hotTable.isEmpty
+															 * () +
+															 * "        table's size "
+															 * +
+															 * hotTable.size());
+															 * for(hotItem
+															 * keys:hotTable){
+															 * System
+															 * .out.println
+															 * ("geocell : " +
+															 * keys);
+															 * System.out.
+															 * println("time : "
+															 * +
+															 * keys.getTime());
+															 * }
+															 */
+
+		for (hotItem keys : hotTable) {
+			String cell = keys.getGeocell();
+			String now = keys.getTime();
+			Date time = EventQueue.DATE_FORMAT.parse(now);
+			time.setHours(time.getHours() - 1);
+
+			String oneHourAgo = GetNowTime.DateToStr(time);
+
+			System.out.println("now : " + now.toString());
+			System.out.println("oneHourAgo : " + oneHourAgo.toString());
+
+			List<String> cellToList = new ArrayList<String>();
+			cellToList.add(cell);
+
+			Filter f1 = new FilterPredicate(GEOCELL, FilterOperator.IN,
+					cellToList);
+			Filter f2 = new FilterPredicate(TIME, FilterOperator.GREATER_THAN,
+					oneHourAgo);
+			Filter f3 = new FilterPredicate(TIME, FilterOperator.LESS_THAN, now);
+
+			Filter real_filter = CompositeFilterOperator.and(f1, f2, f3);
+
+			Query query = new Query(ENTITY).setFilter(real_filter);
+			PreparedQuery pq_ = datastore.prepare(query);
+
+			for (Entity result : pq_.asList(FetchOptions.Builder.withLimit(1))) {
+				JsonObject photo = dao.getJsonObject(result);
+				jsonArray.put(photo);
+				System.out.println(photo.getString("makeTimeS"));
+				System.out.println("jsonArrayPUT()");
+			}
+			System.out.println(jsonArray.length());
+		}
+
+		JsonObject outer = new JsonObject();
+		outer.put("data", jsonArray);
+		String sending = new String(outer.toString().getBytes(), "EUC-KR");
+		return Response.status(HttpServletResponse.SC_OK).entity(sending)
+				.build();
+	}
+
+	private Filter CurrentFilter(String time) throws ParseException {
+		Filter inHotGeoCell = new FilterPredicate(GEOCELL, FilterOperator.IN,
+				topCellList());
+		Filter oneHourAgo = new FilterPredicate(TIME,
+				FilterOperator.GREATER_THAN, time);
+		Filter selectEntity = CompositeFilterOperator.and(inHotGeoCell,
+				oneHourAgo);
+
+		return selectEntity;
+	}
+
+	private List<String> topCellList() {
+		List<String> cellList = new ArrayList<String>();
+		cellList.add(EventQueue.get().getTop().getGeocell().get(9));
+
+		return cellList;
+	}
+}

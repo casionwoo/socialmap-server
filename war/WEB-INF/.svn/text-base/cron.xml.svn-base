@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+
+	<cron>
+		<url>/rest/make/hotplace</url>
+		<description>clearing datastore hot_place</description>
+		<schedule>every 1 hours synchronized</schedule>
+		<!-- <timezone>Asia/Seoul</timezone> -->
+	</cron>
+
+
+	<cron>
+		<url>/rest/make/coolplace</url>
+		<description>clearing datastore hot_place</description>
+		<schedule>every 30 minutes synchronized</schedule>
+	</cron>
+
+</cronentries>

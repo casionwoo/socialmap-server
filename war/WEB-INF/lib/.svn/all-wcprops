@@ -1,0 +1,185 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/2013/!svn/ver/625/yujeungwoo/casionwoo/war/WEB-INF/lib
+END
+appengine-endpoints.jar
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/appengine-endpoints.jar
+END
+jersey-core-1.17.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jersey-core-1.17.jar
+END
+geocell-0.0.3-SNAPSHOT.jar
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/geocell-0.0.3-SNAPSHOT.jar
+END
+commons-io-2.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/commons-io-2.4.jar
+END
+jdo2-api-2.3-eb.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jdo2-api-2.3-eb.jar
+END
+appengine-api-1.0-sdk-1.7.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/appengine-api-1.0-sdk-1.7.4.jar
+END
+jackson-xc-1.9.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jackson-xc-1.9.2.jar
+END
+jackson-core-asl-1.9.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jackson-core-asl-1.9.2.jar
+END
+jsr107cache-1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jsr107cache-1.1.jar
+END
+jackson-jaxrs-1.9.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jackson-jaxrs-1.9.2.jar
+END
+jackson-mapper-asl-1.9.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jackson-mapper-asl-1.9.2.jar
+END
+appengine-jsr107cache-1.7.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/appengine-jsr107cache-1.7.4.jar
+END
+commons-lang-2.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/commons-lang-2.5.jar
+END
+jsr311-api-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jsr311-api-1.1.1.jar
+END
+json-simple-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/json-simple-1.1.1.jar
+END
+appengine-api-labs.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/appengine-api-labs.jar
+END
+asm-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/asm-3.1.jar
+END
+datanucleus-jpa-1.1.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/datanucleus-jpa-1.1.5.jar
+END
+restfb-1.6.9.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/restfb-1.6.9.jar
+END
+jersey-servlet-1.17.jar
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jersey-servlet-1.17.jar
+END
+geronimo-jpa_3.0_spec-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/geronimo-jpa_3.0_spec-1.1.1.jar
+END
+jersey-client-1.17.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jersey-client-1.17.jar
+END
+commons-lang3-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/commons-lang3-3.1.jar
+END
+jersey-json-1.17.jar
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jersey-json-1.17.jar
+END
+jettison-1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jettison-1.1.jar
+END
+geronimo-jta_1.1_spec-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar
+END
+org.snu.ids.ha.jar
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/2013/!svn/ver/625/yujeungwoo/casionwoo/war/WEB-INF/lib/org.snu.ids.ha.jar
+END
+datanucleus-appengine-1.0.10.final.jar
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/datanucleus-appengine-1.0.10.final.jar
+END
+jersey-server-1.17.jar
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/jersey-server-1.17.jar
+END
+datanucleus-core-1.1.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/2013/!svn/ver/621/yujeungwoo/casionwoo/war/WEB-INF/lib/datanucleus-core-1.1.5.jar
+END
